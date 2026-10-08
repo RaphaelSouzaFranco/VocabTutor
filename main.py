@@ -22,7 +22,7 @@ def handle_request(image_path, audio_path):
     return resultado_texto, audio_resultado
 
 with gr.Blocks(title="VocabTutor", theme=gr.themes.Soft()) as demo:
-    gr.Markdown("# 🗣️🖼️ VocabTutor: Multimodal Language Tutor")
+    gr.Markdown("# VocabTutor: Multimodal Language Tutor")
     gr.Markdown("Tire uma foto de um objeto e fale o idioma para o qual deseja traduzir (ex: 'Como eu digo isso em inglês?').")
     
     with gr.Row():
