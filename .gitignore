@@ -1,0 +1,17 @@
+# Segredos e Chaves
+.env
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+
+# Arquivos temporários gerados pelo projeto
+assets/*.mp3
+
+# Arquivos do Sistema Operacional
+.DS_Store
+Thumbs.db
