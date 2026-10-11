@@ -5,16 +5,36 @@ from core.config import GEMINI_API_KEY
 from core.schemas import VocabResponse
 from PIL import Image
 
+import mimetypes
+
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel('gemini-1.5-flash')
+model = genai.GenerativeModel('gemini-3.8-flash')
 
 def process_multimodal_input(image_path: str, audio_path: str) -> VocabResponse:
-    uploaded_audio = None
     try:
         if not GEMINI_API_KEY or GEMINI_API_KEY == "sua_chave_api_aqui":
             return VocabResponse(sucesso=False, mensagem_erro="API Key do Gemini não configurada corretamente no .env")
         
-        uploaded_audio = genai.upload_file(path=audio_path)
+        # Determina o MIME type do áudio
+        mime_type, _ = mimetypes.guess_type(audio_path)
+        if not mime_type:
+            if audio_path.lower().endswith(".wav"):
+                mime_type = "audio/wav"
+            elif audio_path.lower().endswith(".mp3"):
+                mime_type = "audio/mp3"
+            elif audio_path.lower().endswith(".ogg"):
+                mime_type = "audio/ogg"
+            else:
+                mime_type = "audio/wav"
+
+        with open(audio_path, "rb") as f:
+            audio_bytes = f.read()
+
+        audio_part = {
+            "mime_type": mime_type,
+            "data": audio_bytes
+        }
+
         image = Image.open(image_path)
         
         prompt = """
@@ -33,7 +53,7 @@ def process_multimodal_input(image_path: str, audio_path: str) -> VocabResponse:
         """
         
         response = model.generate_content(
-            [prompt, image, uploaded_audio],
+            [prompt, image, audio_part],
             generation_config=genai.types.GenerationConfig(
                 response_mime_type="application/json",
             )
@@ -44,9 +64,3 @@ def process_multimodal_input(image_path: str, audio_path: str) -> VocabResponse:
         
     except Exception as e:
         return VocabResponse(sucesso=False, mensagem_erro=str(e))
-    finally:
-        if uploaded_audio:
-            try:
-                genai.delete_file(uploaded_audio.name)
-            except:
-                pass
