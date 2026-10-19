@@ -1,153 +1,136 @@
-# VocabTutor: Multimodal Language Tutor
+# VocabTutor: Tutor de Vocabulário Multimodal com IA Generativa
 
-[English Version](#english-version) | [Versão em Português](#versão-em-português)
-
----
-
-## English Version
-
-**VocabTutor** is an interactive language learning agent built in Python that utilizes the multimodal capabilities of **Gemini 1.5 Flash**. The system allows the user to take a photo of an object and provide a voice command stating the target language for translation. It then processes this information to return the original word, the target language, the translation, an example sentence, and the audio pronunciation.
-
-### Technology Stack
-
-- **Language:** Python 3.11+
-- **User Interface (UI):** Gradio
-- **Multimodal AI:** Google Generative AI (Gemini 1.5 Flash)
-- **Text-to-Speech:** gTTS
-- **Data Validation:** Pydantic
-- **Environment Management:** python-dotenv
-- **Containerization:** Docker
-
-### Project Structure
-
-* **`requirements.txt`:** Contains all the project dependencies.
-* **`.env.example`:** Template file for environment variables.
-* **`Dockerfile`:** Instructions to build the Docker image.
-* **`.dockerignore`:** Specifies files to be ignored by Docker during the build process (e.g., `.env`).
-* **`core/config.py`:** Environment variables manager.
-* **`core/schemas.py`:** The `VocabResponse` model with strict typing via `pydantic`.
-* **`core/agent.py`:** Multimodal communication logic with the Gemini API.
-* **`core/tts.py`:** Text-to-audio conversion module using `gTTS`.
-* **`main.py`:** Application entry point and UI implemented with Gradio.
-* **`assets/`:** Folder for temporary storage of generated audio files.
-
-### How to Run
-
-You can run this project via **Docker** (recommended for review) or locally with **Python**.
-
-#### Option A: Running via Docker (Recommended)
-
-Running via Docker ensures the application executes in an isolated, standardized environment.
-
-1. **Configure the API Key**  
-   Duplicate the `.env.example` file, rename the copy to `.env`, and insert your Google Gemini API key:
-   ```env
-   GEMINI_API_KEY=your_api_key_here
-   ```
-
-2. **Build the Docker Image**  
-   Open the terminal in the project directory and build the image:
-   ```bash
-   docker build -t vocabtutor .
-   ```
-
-3. **Run the Container**  
-   Start the container, mapping the port and injecting the environment variables:
-   ```bash
-   docker run -p 7860:7860 --env-file .env vocabtutor
-   ```
-
-4. **Access the Application**  
-   Open your browser and navigate to: [http://localhost:7860](http://localhost:7860)
-
-#### Option B: Running Locally (Python)
-
-1. **Configure the API Key**  
-   Duplicate `.env.example`, rename it to `.env`, and add your API key.
-
-2. **Install Dependencies**  
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. **Start the Application**  
-   ```bash
-   python main.py
-   ```
-
-   After running the command, open the local link provided in the terminal (e.g., [http://127.0.0.1:7860/](http://127.0.0.1:7860/)) in your browser.
+#### Aluno: [Raphael Souza Franco Chio de Abreu](https://github.com/RaphaelSouzaFranco)
+#### Orientador: [Leonardo Alfredo Mendoza](https://github.com/)
 
 ---
 
-## Versão em Português
+Trabalho apresentado ao curso [BI MASTER](https://ica.ele.puc-rio.br/cursos/mba-bi-master/) como pré-requisito para conclusão de curso e obtenção de crédito na disciplina "Projetos de Sistemas Inteligentes de Apoio à Decisão".
 
-O **VocabTutor** é um agente interativo de ensino de idiomas desenvolvido em Python que utiliza capacidades multimodais do **Gemini 1.5 Flash**. O sistema permite ao usuário tirar uma foto de um objeto, fornecer um comando de voz informando para qual idioma quer traduzir, e então processa tudo isso para retornar a palavra original, o idioma alvo, a tradução, uma frase de exemplo e a pronúncia em áudio.
+- [Link para o código](https://github.com/RaphaelSouzaFranco/VocabTutor)
+- [Link para a monografia](#) <!-- TODO: inserir link -->
 
-### Stack Tecnológica
+Trabalhos relacionados:
+
+- Team, G. et al. *Gemini 1.5: Unlocking multimodal understanding across millions of tokens of context*. Google DeepMind, 2024.
+- Ouyang, L. et al. *Training language models to follow instructions with human feedback (InstructGPT)*. NeurIPS, 2022.
+
+---
+
+### Resumo
+
+O **VocabTutor** é um agente interativo de ensino de idiomas que combina visão computacional, reconhecimento de fala, processamento de linguagem natural e síntese de voz em um único fluxo de interação. O usuário fotografa um objeto do seu ambiente e grava um comando de voz informando o idioma desejado (por exemplo, *"como eu digo isso em inglês?"*). O sistema identifica o objeto central da imagem, interpreta o idioma solicitado a partir do áudio e retorna a palavra original, a tradução, uma frase de exemplo contextualizada e a pronúncia em áudio.
+
+O núcleo de inteligência é o modelo multimodal **Gemini 1.5 Flash** (Google), capaz de processar imagem e áudio simultaneamente em uma única inferência, dispensando pipelines separados de ASR (*Automatic Speech Recognition*) e classificação de imagens. Modelos dessa família são refinados por técnicas de alinhamento como o *Reinforcement Learning from Human Feedback* (RLHF), o que os torna aptos a seguir instruções em linguagem natural — característica explorada no projeto via engenharia de prompt (*zero-shot*). A saída do modelo é restringida a um esquema JSON validado com **Pydantic**, garantindo robustez e tratamento explícito de falhas (imagem escura, áudio ininteligível). A pronúncia é gerada pelo módulo **gTTS** e a interface web é construída com **Gradio**.
+
+O trabalho demonstra como modelos fundacionais multimodais podem ser orquestrados em uma aplicação de apoio ao aprendizado com baixo custo de desenvolvimento, sem necessidade de treinamento ou *fine-tuning* local.
+
+### Abstract
+
+**VocabTutor** is an interactive language-learning agent that combines computer vision, speech recognition, natural language processing and speech synthesis into a single interaction flow. The user takes a picture of an object in their surroundings and records a voice command stating the target language (e.g., *"how do I say this in English?"*). The system identifies the main object in the image, interprets the requested language from the audio, and returns the original word, its translation, a contextual example sentence, and the audio pronunciation.
+
+The intelligence core is Google's multimodal **Gemini 1.5 Flash** model, which processes image and audio simultaneously in a single inference call, removing the need for separate ASR and image-classification pipelines. Models of this family are aligned through techniques such as *Reinforcement Learning from Human Feedback* (RLHF), which enables them to follow natural-language instructions — a property leveraged in this project through zero-shot prompt engineering. The model output is constrained to a JSON schema validated with **Pydantic**, ensuring robustness and explicit failure handling (dark images, unintelligible audio). Pronunciation is generated by **gTTS**, and the web interface is built with **Gradio**.
+
+This work shows how multimodal foundation models can be orchestrated into a learning-support application at low development cost, with no local training or fine-tuning required.
+
+---
+
+### 1. Introdução
+
+A aquisição de vocabulário é uma das etapas mais importantes no aprendizado de um novo idioma, e estudos em linguística aplicada apontam que a associação entre palavra, imagem e som (aprendizado multimodal) favorece a memorização. Ferramentas tradicionais, porém, exigem que o aprendiz digite a palavra que deseja traduzir — o que pressupõe que ele já a conheça em algum idioma e interrompe a interação natural com o ambiente.
+
+Com o avanço dos **modelos fundacionais multimodais**, tornou-se possível construir agentes que "veem" e "ouvem" ao mesmo tempo. O objetivo deste trabalho é desenvolver o **VocabTutor**, um protótipo funcional que permite ao usuário aprender vocabulário a partir de objetos do mundo real: basta uma foto e um comando de voz. O sistema atua como um tutor de bolso, entregando tradução, contexto de uso (frase de exemplo) e pronúncia, apoiando a decisão do aprendiz sobre *como* e *quando* usar cada palavra.
+
+### 2. Modelagem
+
+#### 2.1 Arquitetura
+
+A solução segue um **pipeline com interface reativa e processamento multimodal unificado**:
+
+```text
+VocabTutor/
+├── main.py              # Interface Gradio e orquestração do fluxo
+├── requirements.txt     # Dependências
+├── .env                 # GEMINI_API_KEY (não versionado)
+├── core/
+│   ├── config.py        # Carregamento de variáveis de ambiente
+│   ├── schemas.py       # Modelo Pydantic VocabResponse
+│   ├── agent.py         # Comunicação multimodal com o Gemini
+│   └── tts.py           # Síntese de voz (gTTS)
+└── assets/              # Áudios temporários gerados
+```
+
+#### 2.2 Fluxo de dados
+
+1. **Captura (Gradio):** o usuário envia/tira uma foto (`gr.Image`) e grava um comando de voz (`gr.Audio(type="filepath")`).
+2. **Upload multimodal:** imagem e áudio são enviados à API do Gemini via `genai.upload_file()`.
+3. **Inferência unificada:** `agent.py` envia as mídias junto a um *prompt de sistema* que instrui o modelo a extrair o idioma do áudio, identificar o objeto central da imagem e responder no formato JSON exato.
+4. **Validação estruturada:** a resposta é validada pelo esquema `VocabResponse` (Pydantic), com os campos `sucesso`, `mensagem_erro`, `palavra_original`, `idioma_alvo`, `traducao` e `frase_exemplo`.
+5. **Síntese de voz:** `tts.py` recebe a tradução e a frase de exemplo com o código ISO do idioma e gera um `.mp3` em arquivo temporário (`tempfile`), evitando conflitos entre usuários.
+6. **Retorno:** a interface exibe os textos e reproduz a pronúncia. Os arquivos enviados à API são excluídos após a inferência.
+
+#### 2.3 Modelos e técnicas
+
+| Componente | Técnica / Modelo | Papel no sistema |
+|---|---|---|
+| Percepção visual + auditiva | **Gemini 1.5 Flash** (Transformer multimodal, destilado do Gemini 1.5 Pro) | Identifica o objeto e transcreve/interpreta o comando de voz em uma única chamada |
+| Alinhamento do modelo | **RLHF** (*Reinforcement Learning from Human Feedback*) e *instruction tuning*, aplicados pelo fornecedor no pré-treinamento | Permite que o modelo siga instruções em linguagem natural e respeite o formato de saída solicitado |
+| Adaptação à tarefa | **Engenharia de prompt *zero-shot*** + saída estruturada (JSON) | Especializa o modelo genérico na tarefa de tutor de vocabulário sem *fine-tuning* |
+| Robustez | **Validação de esquema com Pydantic** | Garante tipagem estrita e tratamento de falhas sem quebrar a aplicação |
+| Pronúncia | **gTTS** (Google Text-to-Speech) | Converte a tradução e a frase de exemplo em áudio no idioma alvo |
+
+> **Sobre aprendizado por reforço:** o projeto não realiza treinamento próprio. O aprendizado por reforço está presente de forma indireta, no alinhamento do LLM via RLHF — processo em que um modelo de recompensa, treinado com preferências humanas, orienta a otimização da política do modelo de linguagem (tipicamente com PPO). É esse alinhamento que torna viável o controle do comportamento do agente apenas por instruções no prompt.
+
+#### 2.4 Stack tecnológica
 
 - **Linguagem:** Python 3.11+
-- **Interface UI:** Gradio
-- **IA Multimodal:** Google Generative AI (Gemini 1.5 Flash)
+- **Interface:** Gradio
+- **IA multimodal:** Google Generative AI (Gemini 1.5 Flash)
 - **Text-to-Speech:** gTTS
-- **Validação de Dados:** Pydantic
-- **Gerenciamento de Env:** python-dotenv
-- **Containerização:** Docker
+- **Validação de dados:** Pydantic
+- **Configuração:** python-dotenv
 
-### Estrutura do Projeto
+#### 2.5 Como executar
 
-* **`requirements.txt`:** Contém todas as dependências do projeto.
-* **`.env.example`:** Arquivo de modelo para as variáveis de ambiente.
-* **`Dockerfile`:** Instruções para a construção da imagem Docker.
-* **`.dockerignore`:** Especifica arquivos que devem ser ignorados pelo Docker durante o build (ex: `.env`).
-* **`core/config.py`:** Gerenciador de variáveis de ambiente.
-* **`core/schemas.py`:** O modelo `VocabResponse` com a tipagem estrita via `pydantic`.
-* **`core/agent.py`:** Lógica de comunicação multimodal com a API do Gemini.
-* **`core/tts.py`:** Módulo de conversão de texto em áudio usando `gTTS`.
-* **`main.py`:** Ponto de entrada da aplicação e Interface UI implementada com Gradio.
-* **`assets/`:** Pasta para armazenamento temporário de arquivos de áudio gerados.
-
-### Como Executar
-
-Você pode rodar este projeto via **Docker** (recomendado para avaliação) ou localmente com **Python**.
-
-#### Opção A: Rodando via Docker (Recomendado)
-
-Rodar via Docker garante que a aplicação seja executada em um ambiente isolado e padronizado.
-
-1. **Configurar a Chave da API**  
-   Duplique o arquivo `.env.example`, renomeie a cópia para `.env` e insira a sua chave da API do Google Gemini:
+1. Configure a chave da API no arquivo `.env`:
    ```env
    GEMINI_API_KEY=sua_chave_api_aqui
    ```
-
-2. **Construir a Imagem Docker**  
-   Abra o terminal no diretório do projeto e construa a imagem:
-   ```bash
-   docker build -t vocabtutor .
-   ```
-
-3. **Rodar o Container**  
-   Inicie o container mapeando a porta e injetando as variáveis de ambiente:
-   ```bash
-   docker run -p 7860:7860 --env-file .env vocabtutor
-   ```
-
-4. **Acessar a Aplicação**  
-   Abra o seu navegador e acesse: [http://localhost:7860](http://localhost:7860)
-
-#### Opção B: Rodando Localmente (Python)
-
-1. **Configurar a Chave da API**  
-   Duplique o `.env.example`, renomeie para `.env` e adicione sua chave da API.
-
-2. **Instalar Dependências**  
-   ```bash
+2. Instale as dependências:
+   ```powershell
    pip install -r requirements.txt
    ```
-
-3. **Iniciar a Aplicação**  
-   ```bash
+3. Inicie a aplicação:
+   ```powershell
    python main.py
    ```
+   Acesse o link local gerado pelo Gradio (ex.: `http://127.0.0.1:7860/`).
+
+### 3. Resultados
+
+O protótipo foi capaz de executar o fluxo completo — da captura de imagem e voz até a reprodução da pronúncia — com uma única chamada ao modelo multimodal, simplificando significativamente a arquitetura em relação a abordagens que combinam modelos independentes de ASR, classificação de imagens e tradução.
+
+Principais observações:
+
+- **Identificação de objetos:** objetos cotidianos bem enquadrados e iluminados foram corretamente identificados.
+- **Interpretação do comando de voz:** o modelo extraiu o idioma alvo a partir de comandos falados de forma natural, sem necessidade de palavras-chave fixas.
+- **Saída estruturada:** a validação com Pydantic assegurou respostas consistentes; em casos de imagem escura ou áudio ininteligível, o sistema retornou `sucesso = false` com mensagem explicativa, sem interromper a execução.
+- **Pronúncia:** o gTTS gerou áudio inteligível para os principais idiomas testados, ainda que com voz menos natural que soluções comerciais.
+
+<!-- TODO: incluir capturas de tela, tabela de testes (acertos/erros por idioma) e tempo médio de resposta -->
+
+### 4. Conclusões
+
+O VocabTutor demonstra que modelos fundacionais multimodais, alinhados por técnicas como RLHF, podem ser orquestrados de forma simples e eficaz para criar sistemas inteligentes de apoio ao aprendizado. A combinação de engenharia de prompt com validação estruturada de saída mostrou-se suficiente para especializar um modelo genérico em uma tarefa específica, sem custo de treinamento.
+
+Como limitações, destacam-se a dependência de uma API externa (custo, latência e privacidade), a sensibilidade à qualidade da imagem e do áudio e a naturalidade limitada da voz sintetizada. Como trabalhos futuros, propõem-se: (i) histórico de palavras aprendidas com repetição espaçada; (ii) uso de vozes neurais para TTS; (iii) avaliação quantitativa com usuários; e (iv) personalização do conteúdo por meio de aprendizado por reforço, adaptando a dificuldade das frases ao desempenho do aluno.
+
+---
+
+Matrícula: 252.100.184
+
+Pontifícia Universidade Católica do Rio de Janeiro
+
+Curso de Pós Graduação *Business Intelligence Master*
 
    Após rodar o comando, abra o link local fornecido no terminal (como [http://127.0.0.1:7860/](http://127.0.0.1:7860/)) no seu navegador.
