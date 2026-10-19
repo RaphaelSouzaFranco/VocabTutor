@@ -34,7 +34,9 @@ def generate_tts(text: str, lang: str) -> str:
         iso_lang = lang_map.get(lang.lower().strip(), "en")
         
         tts = gTTS(text=text, lang=iso_lang, slow=False)
-        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3', dir=os.path.join(os.getcwd(), 'assets'))
+        assets_dir = os.path.join(os.getcwd(), 'assets')
+        os.makedirs(assets_dir, exist_ok=True)
+        temp_file = tempfile.NamedTemporaryFile(delete=False, suffix='.mp3', dir=assets_dir)
         temp_path = temp_file.name
         temp_file.close()
         

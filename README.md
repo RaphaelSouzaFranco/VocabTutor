@@ -132,3 +132,5 @@ Matrícula: 252.100.184
 Pontifícia Universidade Católica do Rio de Janeiro
 
 Curso de Pós Graduação *Business Intelligence Master*
+
+   Após rodar o comando, abra o link local fornecido no terminal (como [http://127.0.0.1:7860/](http://127.0.0.1:7860/)) no seu navegador.
