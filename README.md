@@ -1,14 +1,14 @@
 # VocabTutor: Tutor de Vocabulário Multimodal com IA Generativa
 
 #### Aluno: [Raphael Souza Franco Chio de Abreu](https://github.com/RaphaelSouzaFranco)
-#### Orientador: [Leonardo Alfredo Mendoza](https://github.com/)
+#### Orientador: [Leonardo Alfredo Mendoza]
 
 ---
 
-Trabalho apresentado ao curso [BI MASTER](https://ica.ele.puc-rio.br/cursos/mba-bi-master/) como pré-requisito para conclusão de curso e obtenção de crédito na disciplina "Projetos de Sistemas Inteligentes de Apoio à Decisão".
+Trabalho apresentado ao curso [BI MASTER] como pré-requisito para conclusão de curso e obtenção de formação.
 
 - [Link para o código](https://github.com/RaphaelSouzaFranco/VocabTutor)
-- [Link para a monografia](#) <!-- TODO: inserir link -->
+
 
 Trabalhos relacionados:
 
@@ -117,7 +117,6 @@ Principais observações:
 - **Saída estruturada:** a validação com Pydantic assegurou respostas consistentes; em casos de imagem escura ou áudio ininteligível, o sistema retornou `sucesso = false` com mensagem explicativa, sem interromper a execução.
 - **Pronúncia:** o gTTS gerou áudio inteligível para os principais idiomas testados, ainda que com voz menos natural que soluções comerciais.
 
-<!-- TODO: incluir capturas de tela, tabela de testes (acertos/erros por idioma) e tempo médio de resposta -->
 
 ### 4. Conclusões
 
