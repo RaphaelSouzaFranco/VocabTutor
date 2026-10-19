@@ -122,7 +122,7 @@ Principais observações:
 
 O VocabTutor demonstra que modelos fundacionais multimodais, alinhados por técnicas como RLHF, podem ser orquestrados de forma simples e eficaz para criar sistemas inteligentes de apoio ao aprendizado. A combinação de engenharia de prompt com validação estruturada de saída mostrou-se suficiente para especializar um modelo genérico em uma tarefa específica, sem custo de treinamento.
 
-Como limitações, destacam-se a dependência de uma API externa (custo, latência e privacidade), a sensibilidade à qualidade da imagem e do áudio e a naturalidade limitada da voz sintetizada. Como trabalhos futuros, propõem-se: (i) histórico de palavras aprendidas com repetição espaçada; (ii) uso de vozes neurais para TTS; (iii) avaliação quantitativa com usuários; e (iv) personalização do conteúdo por meio de aprendizado por reforço, adaptando a dificuldade das frases ao desempenho do aluno.
+Como limitações, destacam-se a dependência de uma API externa (custo, latência e privacidade), a sensibilidade à qualidade da imagem e do áudio e a naturalidade limitada da voz sintetizada.
 
 ---
 
