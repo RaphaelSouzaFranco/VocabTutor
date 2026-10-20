@@ -5,7 +5,7 @@
 
 ---
 
-Trabalho apresentado ao curso [BI MASTER] como pré-requisito para conclusão de curso e obtenção de formação.
+Trabalho apresentado ao curso [GEN AI & LLM] como pré-requisito para conclusão de curso e obtenção de formação.
 
 - [Link para o código](https://github.com/RaphaelSouzaFranco/VocabTutor)
 
@@ -130,6 +130,6 @@ Matrícula: 252.100.184
 
 Pontifícia Universidade Católica do Rio de Janeiro
 
-Curso de Pós Graduação *Business Intelligence Master*
+Curso de Pós Graduação *GEN AI & Large Language Models*
 
    Após rodar o comando, abra o link local fornecido no terminal (como [http://127.0.0.1:7860/](http://127.0.0.1:7860/)) no seu navegador.
